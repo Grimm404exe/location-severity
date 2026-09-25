@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Location Severity</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+    }
+
+    .app {
+      max-width: 520px;
+      margin: auto;
+      padding: 24px 16px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+    }
+
+    h2 {
+      margin: 0;
+    }
+
+    .subtitle {
+      color: #666;
+      margin: 0 0 24px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    }
+
+    .label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .severity-buttons {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+
+    .severity-button {
+      height: 52px;
+      border: 1px solid #ccc;
+      background: white;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .severity-button.selected {
+      background: #222;
+      color: white;
+      border-color: #222;
+    }
+
+    #recordButton {
+      width: 100%;
+      height: 54px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 12px;
+      background: #222;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #recordButton:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+
+    #status {
+      min-height: 40px;
+      margin-top: 12px;
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .gps-status {
+      margin-top: 15px;
+      padding: 12px;
+      background: #f7f7f7;
+      border-radius: 10px;
+      text-align: center;
+      display: none;
+    }
+
+    .gps-status.visible {
+      display: block;
+    }
+
+    .gps-accuracy {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 4px;
+    }
+
+    .gps-label {
+      color: #777;
+      font-size: 12px;
+    }
+
+    .records-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    #recordCount {
+      color: #888;
+      font-size: 13px;
+    }
+
+    .record {
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+
+    .record-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .record-number {
+      color: #888;
+      font-size: 12px;
+    }
+
+    .severity {
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .coordinates {
+      margin-top: 8px;
+      font-family: monospace;
+      font-size: 14px;
+      word-break: break-all;
+      line-height: 1.5;
+    }
+
+    .accuracy {
+      margin-top: 6px;
+      color: #777;
+      font-size: 12px;
+    }
+
+    .time {
+      margin-top: 6px;
+      color: #888;
+      font-size: 12px;
+    }
+
+    .export-button {
+      width: 100%;
+      height: 48px;
+      border: 1px solid #ccc;
+      background: white;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .clear-button {
+      width: 100%;
+      height: 44px;
+      border: none;
+      background: #eee;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #emptyMessage {
+      text-align: center;
+      color: #888;
+      padding: 20px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <h1>Location Severity</h1>
+
+  <p class="subtitle">
+    Select a severity and record your most accurate current location.
+  </p>
+
+
+  <!-- RECORDING -->
+
+  <div class="card">
+
+    <label class="label">
+      Severity
+    </label>
+
+    <div class="severity-buttons">
+
+      <button class="severity-button" data-value="1">1</button>
+      <button class="severity-button" data-value="2">2</button>
+      <button class="severity-button" data-value="3">3</button>
+      <button class="severity-button" data-value="4">4</button>
+      <button class="severity-button" data-value="5">5</button>
+
+    </div>
+
+
+    <button id="recordButton" disabled>
+      Get Location & Save Record
+    </button>
+
+
+    <div id="status">
+      Select a severity to begin.
+    </div>
+
+
+    <!-- LIVE GPS STATUS -->
+
+    <div id="gpsStatus" class="gps-status">
+
+      <div class="gps-label">
+        CURRENT GPS ACCURACY
+      </div>
+
+      <div id="gpsAccuracy" class="gps-accuracy">
+        --
+      </div>
+
+      <div class="gps-label">
+        Waiting for GPS...
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- RECORDS -->
+
+  <div class="card">
+
+    <div class="records-header">
+
+      <h2>Records</h2>
+
+      <span id="recordCount">
+        0 records
+      </span>
+
+    </div>
+
+
+    <div id="records"></div>
+
+
+    <div id="emptyMessage">
+      No records yet.
+    </div>
+
+
+    <button id="exportButton" class="export-button">
+      Export All Data as CSV
+    </button>
+
+
+    <button id="clearButton" class="clear-button">
+      Delete All Records
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  /*
+   * ==========================================
+   * LOCATION SEVERITY APP
+   * ==========================================
+   *
+   * Records contain:
+   * - Latitude
+   * - Longitude
+   * - GPS accuracy
+   * - Severity
+   * - Date/time
+   *
+   * The app uses watchPosition() instead of
+   * accepting the first GPS reading.
+   *
+   * It keeps looking for a better reading.
+   *
+   * Target accuracy: 10 metres
+   * Maximum search time: 30 seconds
+   */
+
+
+  // ------------------------------------------
+  // SETTINGS
+  // ------------------------------------------
+
+  const STORAGE_KEY =
+    "locationSeverityRecords";
+
+  const TARGET_ACCURACY =
+    10;
+
+  const MAX_WAIT_TIME =
+    30000;
+
+
+  // ------------------------------------------
+  // STATE
+  // ------------------------------------------
+
+  let selectedSeverity =
+    null;
+
+  let records =
+    loadRecords();
+
+  let watchId =
+    null;
+
+  let bestPosition =
+    null;
+
+  let recordingActive =
+    false;
+
+
+  // ------------------------------------------
+  // HTML ELEMENTS
+  // ------------------------------------------
+
+  const severityButtons =
+    document.querySelectorAll(
+      ".severity-button"
+    );
+
+  const recordButton =
+    document.getElementById(
+      "recordButton"
+    );
+
+  const status =
+    document.getElementById(
+      "status"
+    );
+
+  const recordsContainer =
+    document.getElementById(
+      "records"
+    );
+
+  const emptyMessage =
+    document.getElementById(
+      "emptyMessage"
+    );
+
+  const recordCount =
+    document.getElementById(
+      "recordCount"
+    );
+
+  const exportButton =
+    document.getElementById(
+      "exportButton"
+    );
+
+  const clearButton =
+    document.getElementById(
+      "clearButton"
+    );
+
+  const gpsStatus =
+    document.getElementById(
+      "gpsStatus"
+    );
+
+  const gpsAccuracy =
+    document.getElementById(
+      "gpsAccuracy"
+    );
+
+
+  // ------------------------------------------
+  // LOAD SAVED RECORDS
+  // ------------------------------------------
+
+  function loadRecords() {
+
+    try {
+
+      const saved =
+        localStorage.getItem(
+          STORAGE_KEY
+        );
+
+      if (!saved) {
+        return [];
+      }
+
+      return JSON.parse(saved);
+
+    } catch (error) {
+
+      console.error(
+        "Could not load saved records:",
+        error
+      );
+
+      return [];
+
+    }
+
+  }
+
+
+  // ------------------------------------------
+  // SAVE RECORDS
+  // ------------------------------------------
+
+  function saveRecords() {
+
+    try {
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(records)
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Could not save records:",
+        error
+      );
+
+      status.textContent =
+        "WARNING: Could not save the record.";
+
+    }
+
+  }
+
+
+  // ------------------------------------------
+  // SELECT SEVERITY
+  // ------------------------------------------
+
+  severityButtons.forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        selectedSeverity =
+          Number(
+            button.dataset.value
+          );
+
+
+        severityButtons.forEach(
+          btn => {
+
+            btn.classList.remove(
+              "selected"
+            );
+
+          }
+        );
+
+
+        button.classList.add(
+          "selected"
+        );
+
+
+        recordButton.disabled =
+          false;
+
+
+        status.textContent =
+          `Severity ${selectedSeverity} selected. ` +
+          `Press the button to record your location.`;
+
+      }
+    );
+
+  });
+
+
+  // ------------------------------------------
+  // START GPS SEARCH
+  // ------------------------------------------
+
+  recordButton.addEventListener(
+    "click",
+    startLocationCapture
+  );
+
+
+  function startLocationCapture() {
+
+    if (
+      selectedSeverity === null ||
+      recordingActive
+    ) {
+      return;
+    }
+
+
+    if (!navigator.geolocation) {
+
+      status.textContent =
+        "Geolocation is not supported by this browser.";
+
+      return;
+
+    }
+
+
+    recordingActive =
+      true;
+
+    bestPosition =
+      null;
+
+
+    recordButton.disabled =
+      true;
+
+    recordButton.textContent =
+      "Finding Best GPS Location...";
+
+
+    gpsStatus.classList.add(
+      "visible"
+    );
+
+
+    gpsAccuracy.textContent =
+      "Searching...";
+
+
+    status.textContent =
+      "Searching for the most accurate GPS fix...";
+
+
+    const startTime =
+      Date.now();
+
+
+    // --------------------------------------
+    // WATCH GPS
+    // --------------------------------------
+
+    watchId =
+      navigator.geolocation.watchPosition(
+
+        function(position) {
+
+          const accuracy =
+            position.coords.accuracy;
+
+
+          // Keep the most accurate position
+          if (
+            bestPosition === null ||
+            accuracy <
+              bestPosition.coords.accuracy
+          ) {
+
+            bestPosition =
+              position;
+
+          }
+
+
+          // Display live accuracy
+
+          gpsAccuracy.textContent =
+            `±${Math.round(accuracy)} m`;
+
+
+          const elapsed =
+            Math.round(
+              (Date.now() - startTime) /
+              1000
+            );
+
+
+          status.textContent =
+            `GPS accuracy: ±${Math.round(accuracy)} m ` +
+            `(${elapsed}s) — looking for a better fix...`;
+
+
+          // --------------------------------
+          // GOOD ENOUGH
+          // --------------------------------
+
+          if (
+            accuracy <= TARGET_ACCURACY
+          ) {
+
+            finishRecording(
+              position,
+              false
+            );
+
+          }
+
+        },
+
+
+        function(error) {
+
+          console.error(
+            "GPS error:",
+            error
+          );
+
+
+          // If we already have a position,
+          // use the best one.
+
+          if (bestPosition) {
+
+            finishRecording(
+              bestPosition,
+              true
+            );
+
+            return;
+
+          }
+
+
+          stopGPS();
+
+
+          if (error.code === 1) {
+
+            status.textContent =
+              "Location permission was denied. " +
+              "Please allow location access.";
+
+          }
+
+          else if (error.code === 2) {
+
+            status.textContent =
+              "Your location could not be determined.";
+
+          }
+
+          else if (error.code === 3) {
+
+            status.textContent =
+              "GPS request timed out.";
+
+          }
+
+          else {
+
+            status.textContent =
+              "Could not get your location.";
+
+          }
+
+
+          resetRecordButton();
+
+        },
+
+
+        {
+
+          // Ask the device for its
+          // highest available accuracy.
+
+          enableHighAccuracy:
+            true,
+
+          // Never use an old cached
+          // location.
+
+          maximumAge:
+            0,
+
+          timeout:
+            MAX_WAIT_TIME
+
+        }
+
+      );
+
+
+    // --------------------------------------
+    // MAXIMUM SEARCH TIME
+    // --------------------------------------
+
+    setTimeout(
+      () => {
+
+        if (!recordingActive) {
+          return;
+        }
+
+
+        if (bestPosition) {
+
+          finishRecording(
+            bestPosition,
+            true
+          );
+
+        }
+
+        else {
+
+          stopGPS();
+
+
+          status.textContent =
+            "No GPS fix could be obtained. " +
+            "Please try again outdoors.";
+
+          resetRecordButton();
+
+        }
+
+      },
+      MAX_WAIT_TIME
+    );
+
+  }
+
+
+  // ------------------------------------------
+  // FINISH RECORDING
+  // ------------------------------------------
+
+  function finishRecording(
+    position,
+    timedOut
+  ) {
+
+    if (!recordingActive) {
+      return;
+    }
+
+
+    recordingActive =
+      false;
+
+
+    stopGPS();
+
+
+    const latitude =
+      position.coords.latitude;
+
+    const longitude =
+      position.coords.longitude;
+
+    const accuracy =
+      position.coords.accuracy;
+
+
+    // --------------------------------------
+    // CREATE RECORD
+    // --------------------------------------
+
+    const record = {
+
+      id:
+        Date.now(),
+
+      latitude:
+        latitude,
+
+      longitude:
+        longitude,
+
+      accuracy:
+        accuracy,
+
+      severity:
+        selectedSeverity,
+
+      timestamp:
+        new Date().toISOString()
+
+    };
+
+
+    // --------------------------------------
+    // SAVE RECORD
+    // --------------------------------------
+
+    records.unshift(
+      record
+    );
+
+
+    saveRecords();
+
+
+    displayRecords();
+
+
+    // --------------------------------------
+    // SHOW RESULT
+    // --------------------------------------
+
+    gpsAccuracy.textContent =
+      `±${Math.round(accuracy)} m`;
+
+
+    if (
+      timedOut &&
+      accuracy > TARGET_ACCURACY
+    ) {
+
+      status.textContent =
+        `Saved best available GPS fix: ` +
+        `±${Math.round(accuracy)} m`;
+
+    }
+
+    else {
+
+      status.textContent =
+        `✓ Location saved — ` +
+        `accuracy ±${Math.round(accuracy)} m`;
+
+    }
+
+
+    resetRecordButton();
+
+  }
+
+
+  // ------------------------------------------
+  // STOP GPS
+  // ------------------------------------------
+
+  function stopGPS() {
+
+    if (watchId !== null) {
+
+      navigator.geolocation.clearWatch(
+        watchId
+      );
+
+      watchId =
+        null;
+
+    }
+
+  }
+
+
+  // ------------------------------------------
+  // RESET BUTTON
+  // ------------------------------------------
+
+  function resetRecordButton() {
+
+    recordButton.disabled =
+      false;
+
+    recordButton.textContent =
+      "Get Location & Save Record";
+
+  }
+
+
+  // ------------------------------------------
+  // DISPLAY RECORDS
+  // ------------------------------------------
+
+  function displayRecords() {
+
+    recordsContainer.innerHTML =
+      "";
+
+
+    recordCount.textContent =
+      `${records.length} ${
+        records.length === 1
+          ? "record"
+          : "records"
+      }`;
+
+
+    emptyMessage.style.display =
+      records.length === 0
+        ? "block"
+        : "none";
+
+
+    records.forEach(
+      (record, index) => {
+
+        const element =
+          document.createElement(
+            "div"
+          );
+
+
+        element.className =
+          "record";
+
+
+        const date =
+          new Date(
+            record.timestamp
+          );
+
+
+        element.innerHTML = `
+
+          <div class="record-top">
+
+            <div class="record-number">
+
+              Record ${records.length - index}
+
+            </div>
+
+            <div class="severity">
+
+              Severity ${record.severity}/5
+
+            </div>
+
+          </div>
+
+
+          <div class="coordinates">
+
+            ${record.latitude.toFixed(8)},
+            ${record.longitude.toFixed(8)}
+
+          </div>
+
+
+          <div class="accuracy">
+
+            GPS accuracy:
+            ±${Math.round(record.accuracy)} metres
+
+          </div>
+
+
+          <div class="time">
+
+            ${date.toLocaleString()}
+
+          </div>
+
+        `;
+
+
+        recordsContainer.appendChild(
+          element
+        );
+
+      }
+    );
+
+  }
+
+
+  // ------------------------------------------
+  // EXPORT CSV
+  // ------------------------------------------
+
+  exportButton.addEventListener(
+    "click",
+    () => {
+
+      if (records.length === 0) {
+
+        alert(
+          "There are no records to export."
+        );
+
+        return;
+
+      }
+
+
+      let csv =
+        "Record,Severity,Latitude,Longitude,GPS Accuracy (m),Date/Time\n";
+
+
+      records.forEach(
+        (record, index) => {
+
+          csv +=
+            `"${records.length - index}",` +
+            `"${record.severity}",` +
+            `"${record.latitude}",` +
+            `"${record.longitude}",` +
+            `"${record.accuracy}",` +
+            `"${record.timestamp}"\n`;
+
+        }
+      );
+
+
+      const blob =
+        new Blob(
+          [csv],
+          {
+            type:
+              "text/csv;charset=utf-8;"
+          }
+        );
+
+
+      const url =
+        URL.createObjectURL(
+          blob
+        );
+
+
+      const link =
+        document.createElement(
+          "a"
+        );
+
+
+      link.href =
+        url;
+
+
+      link.download =
+        "location-severity-records.csv";
+
+
+      document.body.appendChild(
+        link
+      );
+
+
+      link.click();
+
+
+      document.body.removeChild(
+        link
+      );
+
+
+      URL.revokeObjectURL(
+        url
+      );
+
+    }
+  );
+
+
+  // ------------------------------------------
+  // DELETE EVERYTHING
+  // ------------------------------------------
+
+  clearButton.addEventListener(
+    "click",
+    () => {
+
+      if (records.length === 0) {
+        return;
+      }
+
+
+      const confirmed =
+        confirm(
+          "Are you sure you want to permanently " +
+          "delete ALL records? This cannot be undone."
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      records =
+        [];
+
+
+      localStorage.removeItem(
+        STORAGE_KEY
+      );
+
+
+      displayRecords();
+
+
+      status.textContent =
+        "All records have been deleted.";
+
+    }
+  );
+
+
+  // ------------------------------------------
+  // INITIAL DISPLAY
+  // ------------------------------------------
+
+  displayRecords();
+
+</script>
+
+</body>
+</html>
