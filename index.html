@@ -71,15 +71,60 @@
       border-color: #222;
     }
 
-    /* PHOTO */
-    .photo-section { margin-top: 20px; }
-    .photo-button { width: 100%; height: 50px; border: 1px solid #ccc; background: white; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; }
-    #photoInput { display: none; }
-    .photo-preview-container { display: none; margin-top: 12px; }
-    .photo-preview-container.visible { display: block; }
-    #photoPreview { width: 100%; max-height: 300px; object-fit: cover; border-radius: 12px; border: 1px solid #ddd; display: block; }
-    .remove-photo-button { width: 100%; margin-top: 8px; height: 40px; border: none; background: #eee; border-radius: 8px; cursor: pointer; font-size: 13px; }
-    .photo-note { margin-top: 7px; color: #888; font-size: 12px; text-align: center; }
+    .photo-section {
+      margin-top: 20px;
+    }
+
+    .photo-button {
+      width: 100%;
+      height: 50px;
+      border: 1px solid #ccc;
+      background: white;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #photoInput {
+      display: none;
+    }
+
+    .photo-preview-container {
+      display: none;
+      margin-top: 12px;
+    }
+
+    .photo-preview-container.visible {
+      display: block;
+    }
+
+    #photoPreview {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      display: block;
+    }
+
+    .remove-photo-button {
+      width: 100%;
+      margin-top: 8px;
+      height: 40px;
+      border: none;
+      background: #eee;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .photo-note {
+      margin-top: 7px;
+      color: #888;
+      font-size: 12px;
+      text-align: center;
+    }
 
     #recordButton {
       width: 100%;
@@ -183,10 +228,34 @@
       font-size: 12px;
     }
 
-    .record-photo-container { margin-top: 12px; }
-    .record-photo { width: 100%; max-height: 350px; object-fit: cover; border-radius: 10px; border: 1px solid #ddd; display: block; }
-    .no-photo { margin-top: 12px; padding: 10px; background: #f7f7f7; border-radius: 8px; color: #999; font-size: 12px; text-align: center; }
-    .photo-label { font-size: 12px; color: #777; margin-bottom: 6px; }
+    .record-photo-container {
+      margin-top: 12px;
+    }
+
+    .record-photo {
+      width: 100%;
+      max-height: 350px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      display: block;
+    }
+
+    .no-photo {
+      margin-top: 12px;
+      padding: 10px;
+      background: #f7f7f7;
+      border-radius: 8px;
+      color: #999;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .photo-label {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 6px;
+    }
 
     .time {
       margin-top: 6px;
@@ -235,9 +304,6 @@
     Select a severity and record your most accurate current location.
   </p>
 
-
-  <!-- RECORDING -->
-
   <div class="card">
 
     <label class="label">
@@ -245,39 +311,66 @@
     </label>
 
     <div class="severity-buttons">
-
       <button class="severity-button" data-value="1">1</button>
       <button class="severity-button" data-value="2">2</button>
       <button class="severity-button" data-value="3">3</button>
       <button class="severity-button" data-value="4">4</button>
       <button class="severity-button" data-value="5">5</button>
-
     </div>
-
 
     <!-- OPTIONAL PHOTO -->
     <div class="photo-section">
-      <label class="label">Photo <span style="font-weight: normal; color: #888;">(Optional)</span></label>
-      <button type="button" class="photo-button" id="photoButton">📷 Take Photo</button>
-      <input type="file" id="photoInput" accept="image/*" capture="environment">
-      <div id="photoPreviewContainer" class="photo-preview-container">
-        <img id="photoPreview" alt="Photo preview">
-        <button type="button" id="removePhotoButton" class="remove-photo-button">Remove Photo</button>
+
+      <label class="label">
+        Photo
+        <span style="font-weight: normal; color: #888;">
+          (Optional)
+        </span>
+      </label>
+
+      <button
+        type="button"
+        class="photo-button"
+        id="photoButton">
+        📷 Take Photo
+      </button>
+
+      <input
+        type="file"
+        id="photoInput"
+        accept="image/*"
+        capture="environment">
+
+      <div
+        id="photoPreviewContainer"
+        class="photo-preview-container">
+
+        <img
+          id="photoPreview"
+          alt="Photo preview">
+
+        <button
+          type="button"
+          id="removePhotoButton"
+          class="remove-photo-button">
+          Remove Photo
+        </button>
+
       </div>
-      <div class="photo-note">You can skip the photo if you don't need one.</div>
+
+      <div class="photo-note">
+        You can skip the photo if you don't need one.
+      </div>
+
     </div>
 
     <button id="recordButton" disabled>
       Get Location & Save Record
     </button>
 
-
     <div id="status">
       Select a severity to begin.
     </div>
-
-
-    <!-- LIVE GPS STATUS -->
 
     <div id="gpsStatus" class="gps-status">
 
@@ -312,21 +405,21 @@
 
     </div>
 
-
     <div id="records"></div>
-
 
     <div id="emptyMessage">
       No records yet.
     </div>
 
-
-    <button id="exportButton" class="export-button">
+    <button
+      id="exportButton"
+      class="export-button">
       Export All Data as CSV
     </button>
 
-
-    <button id="clearButton" class="clear-button">
+    <button
+      id="clearButton"
+      class="clear-button">
       Delete All Records
     </button>
 
@@ -338,59 +431,45 @@
 <script>
 
   /*
-   * ==========================================
    * LOCATION SEVERITY APP
-   * ==========================================
    *
-   * Records contain:
+   * Every record contains:
    * - Latitude
    * - Longitude
    * - GPS accuracy
    * - Severity
+   * - Optional photo
    * - Date/time
    *
-   * The app uses watchPosition() instead of
-   * accepting the first GPS reading.
-   *
-   * It keeps looking for a better reading.
-   *
-   * Target accuracy: 10 metres
-   * Maximum search time: 30 seconds
+   * GPS:
+   * - Uses watchPosition()
+   * - Looks for better readings
+   * - Target accuracy: 10 metres
+   * - Maximum search time: 30 seconds
    */
 
+  const STORAGE_KEY = "locationSeverityRecords";
 
-  // ------------------------------------------
-  // SETTINGS
-  // ------------------------------------------
+  const TARGET_ACCURACY = 10;
 
-  const STORAGE_KEY =
-    "locationSeverityRecords";
-
-  const TARGET_ACCURACY =
-    10;
-
-  const MAX_WAIT_TIME =
-    30000;
+  const MAX_WAIT_TIME = 30000;
 
 
   // ------------------------------------------
   // STATE
   // ------------------------------------------
 
-  let selectedSeverity =
-    null;
+  let selectedSeverity = null;
 
-  let records =
-    loadRecords();
+  let selectedPhoto = null;
 
-  let watchId =
-    null;
+  let records = loadRecords();
 
-  let bestPosition =
-    null;
+  let watchId = null;
 
-  let recordingActive =
-    false;
+  let bestPosition = null;
+
+  let recordingActive = false;
 
 
   // ------------------------------------------
@@ -398,58 +477,56 @@
   // ------------------------------------------
 
   const severityButtons =
-    document.querySelectorAll(
-      ".severity-button"
-    );
+    document.querySelectorAll(".severity-button");
 
   const recordButton =
-    document.getElementById(
-      "recordButton"
-    );
+    document.getElementById("recordButton");
 
   const status =
-    document.getElementById(
-      "status"
-    );
+    document.getElementById("status");
 
   const recordsContainer =
-    document.getElementById(
-      "records"
-    );
+    document.getElementById("records");
 
   const emptyMessage =
-    document.getElementById(
-      "emptyMessage"
-    );
+    document.getElementById("emptyMessage");
 
   const recordCount =
-    document.getElementById(
-      "recordCount"
-    );
+    document.getElementById("recordCount");
 
   const exportButton =
-    document.getElementById(
-      "exportButton"
-    );
+    document.getElementById("exportButton");
 
   const clearButton =
-    document.getElementById(
-      "clearButton"
-    );
+    document.getElementById("clearButton");
 
   const gpsStatus =
-    document.getElementById(
-      "gpsStatus"
-    );
+    document.getElementById("gpsStatus");
 
   const gpsAccuracy =
-    document.getElementById(
-      "gpsAccuracy"
-    );
+    document.getElementById("gpsAccuracy");
+
+
+  // PHOTO ELEMENTS
+
+  const photoButton =
+    document.getElementById("photoButton");
+
+  const photoInput =
+    document.getElementById("photoInput");
+
+  const photoPreviewContainer =
+    document.getElementById("photoPreviewContainer");
+
+  const photoPreview =
+    document.getElementById("photoPreview");
+
+  const removePhotoButton =
+    document.getElementById("removePhotoButton");
 
 
   // ------------------------------------------
-  // LOAD SAVED RECORDS
+  // LOAD RECORDS
   // ------------------------------------------
 
   function loadRecords() {
@@ -457,9 +534,7 @@
     try {
 
       const saved =
-        localStorage.getItem(
-          STORAGE_KEY
-        );
+        localStorage.getItem(STORAGE_KEY);
 
       if (!saved) {
         return [];
@@ -475,9 +550,7 @@
       );
 
       return [];
-
     }
-
   }
 
 
@@ -502,10 +575,9 @@
       );
 
       status.textContent =
-        "WARNING: Could not save the record.";
+        "WARNING: Could not save the record. Storage may be full.";
 
     }
-
   }
 
 
@@ -520,34 +592,28 @@
       () => {
 
         selectedSeverity =
-          Number(
-            button.dataset.value
-          );
+          Number(button.dataset.value);
 
+        severityButtons.forEach(btn => {
+          btn.classList.remove("selected");
+        });
 
-        severityButtons.forEach(
-          btn => {
+        button.classList.add("selected");
 
-            btn.classList.remove(
-              "selected"
-            );
+        recordButton.disabled = false;
 
-          }
-        );
+        if (selectedPhoto) {
 
+          status.textContent =
+            `Photo attached. Severity ${selectedSeverity} selected.`;
 
-        button.classList.add(
-          "selected"
-        );
+        } else {
 
+          status.textContent =
+            `Severity ${selectedSeverity} selected. ` +
+            `Press the button to record your location.`;
 
-        recordButton.disabled =
-          false;
-
-
-        status.textContent =
-          `Severity ${selectedSeverity} selected. ` +
-          `Press the button to record your location.`;
+        }
 
       }
     );
@@ -559,77 +625,238 @@
   // OPTIONAL PHOTO
   // ------------------------------------------
 
-  photoButton.addEventListener("click", () => photoInput.click());
+  photoButton.addEventListener(
+    "click",
+    () => photoInput.click()
+  );
 
-  photoInput.addEventListener("change", async event => {
-    const file = event.target.files[0];
-    if (!file) return;
 
-    try {
-      status.textContent = "Processing photo...";
-      selectedPhoto = await compressImage(file);
-      photoPreview.src = selectedPhoto;
-      photoPreviewContainer.classList.add("visible");
-      photoButton.textContent = "📷 Retake Photo";
-      status.textContent = selectedSeverity !== null
-        ? `Photo attached. Severity ${selectedSeverity} selected.`
-        : "Photo attached. Now select a severity.";
-    } catch (error) {
-      console.error("Could not process photo:", error);
-      status.textContent = "Could not process that photo.";
-      clearSelectedPhoto();
+  photoInput.addEventListener(
+    "change",
+    async event => {
+
+      const file =
+        event.target.files[0];
+
+      if (!file) {
+        return;
+      }
+
+      try {
+
+        status.textContent =
+          "Processing photo...";
+
+        selectedPhoto =
+          await compressImage(file);
+
+        photoPreview.src =
+          selectedPhoto;
+
+        photoPreviewContainer.classList.add(
+          "visible"
+        );
+
+        photoButton.textContent =
+          "📷 Retake Photo";
+
+        if (selectedSeverity !== null) {
+
+          status.textContent =
+            `Photo attached. Severity ${selectedSeverity} selected.`;
+
+        } else {
+
+          status.textContent =
+            "Photo attached. Now select a severity.";
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Could not process photo:",
+          error
+        );
+
+        status.textContent =
+          "Could not process that photo.";
+
+        clearSelectedPhoto();
+
+      }
+
     }
-  });
+  );
 
-  removePhotoButton.addEventListener("click", () => {
-    clearSelectedPhoto();
-    status.textContent = selectedSeverity !== null
-      ? `Severity ${selectedSeverity} selected. Photo removed.`
-      : "Photo removed.";
-  });
-
-  function compressImage(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = event => {
-        const image = new Image();
-        image.onload = () => {
-          const MAX_SIZE = 1280;
-          let width = image.width;
-          let height = image.height;
-          if (width > MAX_SIZE || height > MAX_SIZE) {
-            if (width > height) {
-              height = Math.round(height * MAX_SIZE / width);
-              width = MAX_SIZE;
-            } else {
-              width = Math.round(width * MAX_SIZE / height);
-              height = MAX_SIZE;
-            }
-          }
-          const canvas = document.createElement("canvas");
-          canvas.width = width;
-          canvas.height = height;
-          canvas.getContext("2d").drawImage(image, 0, 0, width, height);
-          resolve(canvas.toDataURL("image/jpeg", 0.8));
-        };
-        image.onerror = () => reject(new Error("Could not read image."));
-        image.src = event.target.result;
-      };
-      reader.onerror = () => reject(new Error("Could not read photo file."));
-      reader.readAsDataURL(file);
-    });
-  }
-
-  function clearSelectedPhoto() {
-    selectedPhoto = null;
-    photoInput.value = "";
-    photoPreview.src = "";
-    photoPreviewContainer.classList.remove("visible");
-    photoButton.textContent = "📷 Take Photo";
-  }
 
   // ------------------------------------------
-  // START GPS SEARCH
+  // REMOVE PHOTO
+  // ------------------------------------------
+
+  removePhotoButton.addEventListener(
+    "click",
+    () => {
+
+      clearSelectedPhoto();
+
+      if (selectedSeverity !== null) {
+
+        status.textContent =
+          `Severity ${selectedSeverity} selected. Photo removed.`;
+
+      } else {
+
+        status.textContent =
+          "Photo removed.";
+
+      }
+
+    }
+  );
+
+
+  // ------------------------------------------
+  // COMPRESS PHOTO
+  // ------------------------------------------
+
+  function compressImage(file) {
+
+    return new Promise(
+      (resolve, reject) => {
+
+        const reader =
+          new FileReader();
+
+        reader.onload = event => {
+
+          const image =
+            new Image();
+
+          image.onload = () => {
+
+            const MAX_SIZE = 1280;
+
+            let width =
+              image.width;
+
+            let height =
+              image.height;
+
+
+            if (
+              width > MAX_SIZE ||
+              height > MAX_SIZE
+            ) {
+
+              if (width > height) {
+
+                height =
+                  Math.round(
+                    height * MAX_SIZE / width
+                  );
+
+                width =
+                  MAX_SIZE;
+
+              } else {
+
+                width =
+                  Math.round(
+                    width * MAX_SIZE / height
+                  );
+
+                height =
+                  MAX_SIZE;
+
+              }
+
+            }
+
+
+            const canvas =
+              document.createElement("canvas");
+
+            canvas.width =
+              width;
+
+            canvas.height =
+              height;
+
+
+            const context =
+              canvas.getContext("2d");
+
+            context.drawImage(
+              image,
+              0,
+              0,
+              width,
+              height
+            );
+
+
+            resolve(
+              canvas.toDataURL(
+                "image/jpeg",
+                0.8
+              )
+            );
+
+          };
+
+
+          image.onerror = () => {
+            reject(
+              new Error("Could not read image.")
+            );
+          };
+
+
+          image.src =
+            event.target.result;
+
+        };
+
+
+        reader.onerror = () => {
+          reject(
+            new Error("Could not read photo file.")
+          );
+        };
+
+
+        reader.readAsDataURL(file);
+
+      }
+    );
+  }
+
+
+  // ------------------------------------------
+  // CLEAR SELECTED PHOTO
+  // ------------------------------------------
+
+  function clearSelectedPhoto() {
+
+    selectedPhoto = null;
+
+    photoInput.value = "";
+
+    photoPreview.src = "";
+
+    photoPreviewContainer.classList.remove(
+      "visible"
+    );
+
+    photoButton.textContent =
+      "📷 Take Photo";
+
+  }
+
+
+  // ------------------------------------------
+  // START GPS
   // ------------------------------------------
 
   recordButton.addEventListener(
@@ -654,32 +881,24 @@
         "Geolocation is not supported by this browser.";
 
       return;
-
     }
 
 
-    recordingActive =
-      true;
+    recordingActive = true;
 
-    bestPosition =
-      null;
+    bestPosition = null;
 
-
-    recordButton.disabled =
-      true;
+    recordButton.disabled = true;
 
     recordButton.textContent =
       "Finding Best GPS Location...";
-
 
     gpsStatus.classList.add(
       "visible"
     );
 
-
     gpsAccuracy.textContent =
       "Searching...";
-
 
     status.textContent =
       "Searching for the most accurate GPS fix...";
@@ -702,7 +921,7 @@
             position.coords.accuracy;
 
 
-          // Keep the most accurate position
+          // Keep the most accurate reading
           if (
             bestPosition === null ||
             accuracy <
@@ -715,16 +934,14 @@
           }
 
 
-          // Display live accuracy
-
+          // Show current accuracy
           gpsAccuracy.textContent =
             `±${Math.round(accuracy)} m`;
 
 
           const elapsed =
             Math.round(
-              (Date.now() - startTime) /
-              1000
+              (Date.now() - startTime) / 1000
             );
 
 
@@ -733,10 +950,7 @@
             `(${elapsed}s) — looking for a better fix...`;
 
 
-          // --------------------------------
-          // GOOD ENOUGH
-          // --------------------------------
-
+          // Good enough
           if (
             accuracy <= TARGET_ACCURACY
           ) {
@@ -758,9 +972,6 @@
             error
           );
 
-
-          // If we already have a position,
-          // use the best one.
 
           if (bestPosition) {
 
@@ -813,22 +1024,9 @@
 
 
         {
-
-          // Ask the device for its
-          // highest available accuracy.
-
-          enableHighAccuracy:
-            true,
-
-          // Never use an old cached
-          // location.
-
-          maximumAge:
-            0,
-
-          timeout:
-            MAX_WAIT_TIME
-
+          enableHighAccuracy: true,
+          maximumAge: 0,
+          timeout: MAX_WAIT_TIME
         }
 
       );
@@ -859,7 +1057,6 @@
 
           stopGPS();
 
-
           status.textContent =
             "No GPS fix could be obtained. " +
             "Please try again outdoors.";
@@ -889,9 +1086,7 @@
     }
 
 
-    recordingActive =
-      false;
-
+    recordingActive = false;
 
     stopGPS();
 
@@ -937,18 +1132,19 @@
 
 
     // --------------------------------------
-    // SAVE RECORD
+    // SAVE
     // --------------------------------------
 
-    records.unshift(
-      record
-    );
-
+    records.unshift(record);
 
     saveRecords();
 
-
     displayRecords();
+
+
+    // Photo belongs only to this record.
+    // Clear it before the next record.
+    clearSelectedPhoto();
 
 
     // --------------------------------------
@@ -996,8 +1192,7 @@
         watchId
       );
 
-      watchId =
-        null;
+      watchId = null;
 
     }
 
@@ -1010,8 +1205,7 @@
 
   function resetRecordButton() {
 
-    recordButton.disabled =
-      false;
+    recordButton.disabled = false;
 
     recordButton.textContent =
       "Get Location & Save Record";
@@ -1025,8 +1219,7 @@
 
   function displayRecords() {
 
-    recordsContainer.innerHTML =
-      "";
+    recordsContainer.innerHTML = "";
 
 
     recordCount.textContent =
@@ -1047,19 +1240,14 @@
       (record, index) => {
 
         const element =
-          document.createElement(
-            "div"
-          );
-
+          document.createElement("div");
 
         element.className =
           "record";
 
 
         const date =
-          new Date(
-            record.timestamp
-          );
+          new Date(record.timestamp);
 
 
         element.innerHTML = `
@@ -1067,50 +1255,56 @@
           <div class="record-top">
 
             <div class="record-number">
-
               Record ${records.length - index}
-
             </div>
 
             <div class="severity">
-
               Severity ${record.severity}/5
-
             </div>
 
           </div>
 
 
           <div class="coordinates">
-
-            ${record.latitude.toFixed(8)},
-            ${record.longitude.toFixed(8)}
-
+            ${Number(record.latitude).toFixed(8)},
+            ${Number(record.longitude).toFixed(8)}
           </div>
 
 
           <div class="accuracy">
-
             GPS accuracy:
             ±${Math.round(record.accuracy)} metres
-
           </div>
 
 
           <div class="time">
-
             ${date.toLocaleString()}
-
           </div>
 
-          ${record.photo ? `
-            <div class="record-photo-container">
-              <div class="photo-label">Damage Photo</div>
-              <img class="record-photo" src="${record.photo}" alt="Road damage photo" loading="lazy">
-            </div>
-          ` : `
-            <div class="no-photo">No photo attached</div>
-          `}
+
+          ${
+            record.photo
+              ? `
+                <div class="record-photo-container">
+
+                  <div class="photo-label">
+                    Damage Photo
+                  </div>
+
+                  <img
+                    class="record-photo"
+                    src="${record.photo}"
+                    alt="Road damage photo"
+                    loading="lazy">
+
+                </div>
+              `
+              : `
+                <div class="no-photo">
+                  No photo attached
+                </div>
+              `
+          }
 
         `;
 
@@ -1145,7 +1339,7 @@
 
 
       let csv =
-        "Record,Severity,Latitude,Longitude,GPS Accuracy (m),Date/Time\n";
+        "Record,Severity,Latitude,Longitude,GPS Accuracy (m),Photo,Date/Time\n";
 
 
       records.forEach(
@@ -1157,6 +1351,7 @@
             `"${record.latitude}",` +
             `"${record.longitude}",` +
             `"${record.accuracy}",` +
+            `"${record.photo ? "Yes" : "No"}",` +
             `"${record.timestamp}"\n`;
 
         }
@@ -1174,15 +1369,11 @@
 
 
       const url =
-        URL.createObjectURL(
-          blob
-        );
+        URL.createObjectURL(blob);
 
 
       const link =
-        document.createElement(
-          "a"
-        );
+        document.createElement("a");
 
 
       link.href =
@@ -1193,22 +1384,13 @@
         "location-severity-records.csv";
 
 
-      document.body.appendChild(
-        link
-      );
-
+      document.body.appendChild(link);
 
       link.click();
 
+      document.body.removeChild(link);
 
-      document.body.removeChild(
-        link
-      );
-
-
-      URL.revokeObjectURL(
-        url
-      );
+      URL.revokeObjectURL(url);
 
     }
   );
@@ -1239,17 +1421,13 @@
       }
 
 
-      records =
-        [];
-
+      records = [];
 
       localStorage.removeItem(
         STORAGE_KEY
       );
 
-
       displayRecords();
-
 
       status.textContent =
         "All records have been deleted.";
